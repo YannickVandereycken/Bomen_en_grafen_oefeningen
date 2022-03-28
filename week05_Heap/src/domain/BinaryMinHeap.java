@@ -20,7 +20,7 @@ public class BinaryMinHeap<E extends Comparable<E>> {
         if (this.isEmpty())
             throw new IllegalStateException("Kan niet zoeken in een lege heap");
         //TO DO zie oefening 3
-        return null;
+        return values.get(0);
     }
 
     public boolean addValue(E value) {
@@ -36,6 +36,13 @@ public class BinaryMinHeap<E extends Comparable<E>> {
     }
 
     private void bubbleUp() {
+        int finalindex = values.size() - 1;
+        while (values.get(finalindex).compareTo(values.get(((finalindex - 1) / 2))) < 0) {
+            E parent = values.get(((finalindex - 1) / 2));
+            values.set(((finalindex - 1) / 2), values.get(finalindex));
+            values.set(finalindex, parent);
+            finalindex = ((finalindex - 1) / 2);
+        }
         //TO DO : oefening 4
     }
 
@@ -50,6 +57,29 @@ public class BinaryMinHeap<E extends Comparable<E>> {
     }
 
     private void bubbleDown() {
+        int start = 0;
+        E parent = values.get(0);
+        E leftchild = values.get(1);
+        E rightchild = values.get(2);
+        while (((2 * start) + 1) < values.size() && (values.get(start).compareTo(leftchild) > 0 || values.get(start).compareTo(rightchild) > 0)) {
+
+            if (leftchild.compareTo(rightchild) > 0) {
+                values.set(values.indexOf(rightchild), parent);
+                values.set(start, rightchild);
+                start = 2 * start + 2;
+
+            } else {
+                values.set(values.indexOf(leftchild), parent);
+                values.set(start, leftchild);
+                start = 2 * start + 1;
+            }
+            this.print();
+            parent = values.get(start);
+            if (((2 * start) + 2) < values.size()) {
+                leftchild = values.get((2 * start) + 1);
+                rightchild = values.get((2 * start) + 2);
+            }
+        }
         // TODO zie oefening 5
     }
 
