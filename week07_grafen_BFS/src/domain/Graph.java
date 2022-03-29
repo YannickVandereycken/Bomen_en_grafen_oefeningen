@@ -47,9 +47,16 @@ public class Graph {
         // https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Queue.html
         queue.add(start);
         ancestors[start - 1] = 0;
-
         // oefening 1.4
-
+        while (!queue.isEmpty()) {
+            int element = queue.remove();
+            for (int i = 0; i < verbindingsMatrix.length; i++) {
+                if (verbindingsMatrix[element - 1][i] == 1 && ancestors[i] == infty) {
+                    ancestors[i] = element;
+                    queue.add(i + 1);
+                }
+            }
+        }
         return ancestors;
     }
 
@@ -59,18 +66,22 @@ public class Graph {
 
         int[] ancestors = this.findAncestors(start, destination);
         List<Integer> path = new LinkedList<>();
-
         // oefening 1.5
-
+        int current = ancestors[destination - 1];;
+        while (current != 0 && current != infty) {
+            path.add(0, destination);
+            destination=current;
+            current = ancestors[current - 1];
+        }
+        if(current==0)
+            path.add(0, destination);
         return path;
-
     }
 
     private void initArray(int[] array, int value) {
         for (int i = 0; i < array.length; i++)
             array[i] = value;
     }
-
 
     // methode om tussenliggend resultaat te kunnen schrijven naar het scherm
     public String geefAncestors(int start, int destination) {
@@ -82,5 +93,12 @@ public class Graph {
         return res;
     }
 
+//    public void printMatrix(int[][] matrix) {
+//        for (int i : matrix[].length) {
+//            for (int j : matrix[i]) {
+//                System.out.print(matrix[i][j]);
+//            }
+//        }
+//    }
 
 }
