@@ -48,10 +48,11 @@ public class Graph {
         queue.add(start);
         ancestors[start - 1] = 0;
         // oefening 1.4
-        while (!queue.isEmpty()) {
+        while (!queue.isEmpty())
+        {
             int element = queue.remove();
-            for (int i = 0; i < verbindingsMatrix.length; i++) {
-                if (verbindingsMatrix[element - 1][i] == 1 && ancestors[i] == infty) {
+            for(int i = 0; i< this.verbindingsMatrix.length; i++){
+                if (this.verbindingsMatrix[element - 1][i] == 1 && ancestors[i] == infty) {
                     ancestors[i] = element;
                     queue.add(i + 1);
                 }
